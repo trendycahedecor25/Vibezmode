@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibezMode - Audio Branding for Websites</title>
+    <meta name="description" content="Transform your website with curated background music. 7 vibes, 21 modes - perfectly matched to your brand.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background: #fff;
+        }
+
+        /* Hero */
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 1.5rem;
+            text-align: center;
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .cta {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 1rem 2.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: transform 0.3s;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .cta:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Section Base */
+        section {
+            padding: 4rem 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: 3rem;
+            text-align: center;
+            color: #1a1a1a;
+        }
+
+        /* The Problem */
+        .problem {
+            background: #f8f9fa;
+            text-align: center;
+        }
+
+        .problem p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        /* Vibes Grid */
+        .vibes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .vibe-card {
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .vibe-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .vibe-header {
+            padding: 2rem 1.5rem;
+            color: white;
+            text-align: center;
+        }
+
+        /* Individual Vibe Colors */
+        .calm { background: linear-gradient(135deg, #FFC0CB 0%, #40E0D0 100%); }
+        .focus { background: linear-gradient(135deg, #E0E0E0 0%, #00CED1 100%); }
+        .uplift { background: linear-gradient(135deg, #4ECDC4 0%, #F7DC6F 100%); }
+        .bold { background: linear-gradient(135deg, #FFB3BA 0%, #BAE1FF 100%); }
+        .earth { background: linear-gradient(135deg, #9CAF88 0%, #83C5BE 100%); }
+        .luxury { background: linear-gradient(135deg, #D4AF37 0%, #1a1a1a 100%); }
+        .playful { background: linear-gradient(135deg, #FF69B4 0%, #00FF00 100%); }
+
+        .vibe-header h3 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .vibe-body {
+            padding: 1.5rem;
+            background: white;
+        }
+
+        .mode {
+            padding: 0.75rem;
+            margin-bottom: 0.5rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .mode strong {
+            color: #667eea;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            background: #f8f9fa;
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .step {
+            text-align: center;
+        }
+
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background: #667eea;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: 800;
+            margin: 0 auto 1rem;
+        }
+
+        .step h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: #1a1a1a;
+        }
+
+        .step p {
+            color: #666;
+        }
+
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .price-card {
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 2rem;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .price-card:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+        }
+
+        .price-card.featured {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            transform: scale(1.05);
+        }
+
+        .price-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            margin: 1rem 0;
+        }
+
+        .price span {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+
+        .price-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+
+        .price-features li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .price-card.featured .price-features li {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .price-features li::before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: 700;
+        }
+
+        .price-card.featured .price-features li::before {
+            color: white;
+        }
+
+        /* Waitlist */
+        .waitlist {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 5rem 1.5rem;
+        }
+
+        .waitlist h2 {
+            color: white;
+        }
+
+        .waitlist-form {
+            max-width: 500px;
+            margin: 2rem auto 0;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .waitlist-input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+        }
+
+        .waitlist-btn {
+            padding: 1rem 2rem;
+            background: white;
+            color: #667eea;
+            border: none;
+            border-radius: 50px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .waitlist-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .success {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(255,255,255,0.2);
+            border-radius: 10px;
+            display: none;
+        }
+
+        .success.show {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a1a1a;
+            color: white;
+            text-align: center;
+            padding: 2rem 1.5rem;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .waitlist-form {
+                flex-direction: column;
+            }
+            
+            .stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>🎵 Your Website Deserves a Soundtrack</h1>
+            <p>VibezMode adds curated background music to your website—perfectly matched to your brand. Increase engagement by 40% and create unforgettable experiences.</p>
+            <a href="#waitlist" class="cta">Get Early Access</a>
+        </div>
+    </section>
+
+    <!-- The Problem -->
+    <section class="problem">
+        <h2>Physical Stores Set the Mood. Why Don't Websites?</h2>
+        <p>Music is powerful branding. It creates atmosphere, builds emotional connections, and keeps people engaged longer.</p>
+        
+        <div class="stats">
+            <div class="stat">
+                <span class="stat-number">40%</span>
+                <span class="stat-label">Longer session times with audio</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">25%</span>
+                <span class="stat-label">Better brand recall</span>
+            </div>
+            <div class="stat">
+                <span class="stat-number">5 min</span>
+                <span class="stat-label">Setup time</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 7 Vibes -->
+    <section>
+        <h2>Choose Your Vibe</h2>
+        <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 3rem;">
+            7 Unique Vibes × 3 Intensity Modes = 21 Perfect Brand Matches
+        </p>
+        
+        <div class="vibes-grid">
+            <!-- Calm & Cozy -->
+            <div class="vibe-card">
+                <div class="vibe-header calm">
+                    <h3>🕯️ Calm & Cozy</h3>
+                    <p>Warm, welcoming, peaceful</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Soft Mornings:</strong> Gentle acoustic, pastel palette</div>
+                    <div class="mode"><strong>Golden Afternoons:</strong> Lo-fi beats, warm tones</div>
+                    <div class="mode"><strong>Fireside Nights:</strong> Deep acoustic, dim neutrals</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Home decor, wellness, lifestyle brands</p>
+                </div>
+            </div>
+
+            <!-- Focus & Flow -->
+            <div class="vibe-card">
+                <div class="vibe-header focus">
+                    <h3>🎯 Focus & Flow</h3>
+                    <p>Productive, clean, minimal</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Minimal Mind:</strong> Ambient electronica, clean palette</div>
+                    <div class="mode"><strong>Steady Grind:</strong> Lo-fi hip hop, earth tones</div>
+                    <div class="mode"><strong>Peak Flow:</strong> Upbeat synths, neon gradients</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: SaaS, productivity tools, coworking spaces</p>
+                </div>
+            </div>
+
+            <!-- Uplift & Glow -->
+            <div class="vibe-card">
+                <div class="vibe-header uplift">
+                    <h3>✨ Uplift & Glow</h3>
+                    <p>Energizing, bright, motivational</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Fresh Start:</strong> Tropical beats, mint & teal</div>
+                    <div class="mode"><strong>Midday Spark:</strong> Pop-house, bright yellow</div>
+                    <div class="mode"><strong>Radiant Night:</strong> EDM uplift, vibrant pinks</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Fitness, beauty, motivation brands</p>
+                </div>
+            </div>
+
+            <!-- Bold & Creative -->
+            <div class="vibe-card">
+                <div class="vibe-header bold">
+                    <h3>🎨 Bold & Creative</h3>
+                    <p>Artistic, vibrant, expressive</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Artsy Chill:</strong> Indie beats, pastel rainbow</div>
+                    <div class="mode"><strong>Brainstorm Buzz:</strong> Jazz fusion, bold contrast</div>
+                    <div class="mode"><strong>Limitless Energy:</strong> Experimental, neon spectrum</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Agencies, galleries, creative studios</p>
+                </div>
+            </div>
+
+            <!-- Earth & Nature -->
+            <div class="vibe-card">
+                <div class="vibe-header earth">
+                    <h3>🌿 Earth & Nature</h3>
+                    <p>Organic, grounded, serene</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Garden Ease:</strong> Nature sounds, sage green</div>
+                    <div class="mode"><strong>Mountain Air:</strong> Folk/acoustic, stone grey</div>
+                    <div class="mode"><strong>Ocean Deep:</strong> Ambient tones, aqua/navy</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Eco brands, outdoor gear, sustainable products</p>
+                </div>
+            </div>
+
+            <!-- Luxury & Chill -->
+            <div class="vibe-card">
+                <div class="vibe-header luxury">
+                    <h3>👑 Luxury & Chill</h3>
+                    <p>Sophisticated, elegant, premium</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Smooth Lounge:</strong> Bossa nova, soft gold</div>
+                    <div class="mode"><strong>Velvet Evenings:</strong> R&B, burgundy & cream</div>
+                    <div class="mode"><strong>Midnight Luxe:</strong> Deep house, black & gold</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: High-end fashion, hotels, premium services</p>
+                </div>
+            </div>
+
+            <!-- Playful & Fun -->
+            <div class="vibe-card">
+                <div class="vibe-header playful">
+                    <h3>🎉 Playful & Fun</h3>
+                    <p>Energetic, joyful, lively</p>
+                </div>
+                <div class="vibe-body">
+                    <div class="mode"><strong>Retro Bounce:</strong> Funk/disco, neon fonts</div>
+                    <div class="mode"><strong>Happy Vibes:</strong> Bubblegum pop, pastels</div>
+                    <div class="mode"><strong>Party Mode:</strong> Dance/club, flashing neon</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Entertainment, toys, youth brands</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <h2>How It Works</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Choose Your Vibe</h3>
+                <p>Pick from 7 vibes and 3 intensity modes. Each includes curated music, custom icons, fonts, and colors.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Add to Your Site</h3>
+                <p>Copy one line of code. Works with any platform—Shopify, WordPress, Squarespace, or custom sites.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Visitors Hear Your Brand</h3>
+                <p>Light background music starts after permission. Branded player icon stays sticky so users control volume.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section>
+        <h2>Simple Pricing</h2>
+        <div class="pricing-grid">
+            <div class="price-card">
+                <h3>Starter</h3>
+                <div class="price">$29<span>/mo</span></div>
+                <ul class="price-features">
+                    <li>1 Vibe (3 modes)</li>
+                    <li>3 curated playlists</li>
+                    <li>Custom player icon</li>
+                    <li>Brand colors & fonts</li>
+                    <li>Hero frame</li>
+                </ul>
+            </div>
+
+            <div class="price-card featured">
+                <h3>Professional</h3>
+                <div class="price">$79<span>/mo</span></div>
+                <ul class="price-features">
+                    <li>3 Vibes (9 modes)</li>
+                    <li>All features</li>
+                    <li>Analytics dashboard</li>
+                    <li>A/B testing</li>
+                    <li>Priority support</li>
+                </ul>
+            </div>
+
+            <div class="price-card">
+                <h3>Agency</h3>
+                <div class="price">$199<span>/mo</span></div>
+                <ul class="price-features">
+                    <li>All 7 Vibes (21 modes)</li>
+                    <li>Unlimited sites</li>
+                    <li>White-label option</li>
+                    <li>Custom vibes</li>
+                    <li>API access</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Waitlist -->
+    <section class="waitlist" id="waitlist">
+        <h2>Join the Waitlist</h2>
+        <p>Be first to transform your website with audio branding. Early adopters get 50% off for life.</p>
+        
+        <form class="waitlist-form" id="form">
+            <input type="email" class="waitlist-input" placeholder="Enter your email" required>
+            <button type="submit" class="waitlist-btn">Join Waitlist</button>
+        </form>
+        
+        <div class="success" id="success">
+            🎉 You're on the list! We'll notify you when VibezMode launches.
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 VibezMode. Elevate your brand with audio.</p>
+        <p style="margin-top: 0.5rem;">Questions? <a href="mailto:hello@vibezmode.com">hello@vibezmode.com</a></p>
+    </footer>
+
+    <script>
+        document.getElementById('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input').value;
+            console.log('Waitlist signup:', email);
+            document.getElementById('success').classList.add('show');
+            this.reset();
+            setTimeout(() => {
+                document.getElementById('success').classList.remove('show');
+            }, 5000);
+        });
+
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>
