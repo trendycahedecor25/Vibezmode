@@ -176,7 +176,7 @@ base_script = """(function() {
 
 for vibe, color in vibes.items():
     content = base_script.replace('[VIBE]', vibe).replace('[COLOR]', color)
-    with open(f'Vibezmode/v1/{vibe}.js', 'w') as f:
+    with open(f'v1/{vibe}.js', 'w') as f:
         f.write(content)
 
 print("Generated scripts for all vibes.")
