@@ -142,6 +142,7 @@
             overflow: hidden;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             transition: transform 0.3s;
+            cursor: pointer;
         }
 
         .vibe-card:hover {
@@ -375,6 +376,48 @@
             display: block;
         }
 
+        /* Credits Section */
+        .credits-section {
+            background: #f8f9fa;
+        }
+
+        .credits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .credit-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid #667eea;
+        }
+
+        .credit-card h4 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .credit-card p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .credit-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .credit-card a:hover {
+            text-decoration: underline;
+        }
+
         /* Footer */
         footer {
             background: #1a1a1a;
@@ -388,79 +431,192 @@
             text-decoration: none;
         }
 
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            .waitlist-form {
-                flex-direction: column;
-            }
-            
-            .stats {
-                grid-template-columns: 1fr;
-            }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            padding: 1rem 1.5rem;
+        }
+
+        nav > div {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        nav h1 {
+            margin: 0;
+            font-size: 1.5rem;
+            color: #667eea;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #667eea;
+        }
+
+        .hero {
+            margin-top: 60px;
+        }
+
+        /* Live Preview */
+        .live-preview-section {
+            background: white;
+        }
+
+        .preview-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+
+        .preview-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .preview-btn {
+            padding: 0.8rem 1.2rem;
+            background: #667eea;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+
+        .preview-btn:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .preview-btn.active {
+            background: #764ba2;
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .preview-display {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            min-height: 200px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #ddd;
+        }
+
+        .preview-color-box {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .preview-info {
+            margin-top: 1rem;
+            color: #666;
+        }
+
+        .preview-info h4 {
+            color: #1a1a1a;
+            margin-bottom: 0.5rem;
         }
     </style>
 </head>
 <body>
-    <!-- Navigation -->
-    <nav style="position: sticky; top: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 1000; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
-        <div style="font-size: 1.5rem; font-weight: 800; color: #667eea;">🎵 VibezMode</div>
-        <div style="display: flex; gap: 2rem;">
-            <a href="#vibes" style="text-decoration: none; color: #1a1a1a; font-weight: 600;">Vibes</a>
-            <a href="#generator" style="text-decoration: none; color: #1a1a1a; font-weight: 600;">Get Code</a>
-            <a href="#pricing" style="text-decoration: none; color: #1a1a1a; font-weight: 600;">Pricing</a>
-            <a href="#waitlist" style="text-decoration: none; background: #667eea; color: white; padding: 0.5rem 1.2rem; border-radius: 50px; font-weight: 600;">Join Waitlist</a>
+    <!-- Navigation Menu -->
+    <nav>
+        <div>
+            <h1>VibezMode</h1>
+            <div style="display: flex; gap: 2rem;">
+                <a href="#vibes">Vibes</a>
+                <a href="#live-preview">Preview</a>
+                <a href="#generator">Get Code</a>
+                <a href="#pricing">Pricing</a>
+                <a href="#credits">Credits</a>
+                <a href="#waitlist" style="color: #667eea; font-weight: 700;">Join Waitlist</a>
+            </div>
         </div>
     </nav>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1>🎵 Your Website Deserves a Soundtrack</h1>
-            <p>VibezMode adds curated background music to your website—perfectly matched to your brand. Increase engagement by 40% and create unforgettable experiences.</p>
-            <a href="#waitlist" class="cta">Get Early Access</a>
+            <h1>Transform Your Website with Audio Branding</h1>
+            <p>7 carefully curated vibes, 21 intensity modes. Add background music that enhances your brand identity in seconds.</p>
+            <a href="#generator" class="cta">Get Your Code</a>
         </div>
     </section>
 
     <!-- The Problem -->
     <section class="problem">
-        <h2>Physical Stores Set the Mood. Why Don't Websites?</h2>
-        <p>Music is powerful branding. It creates atmosphere, builds emotional connections, and keeps people engaged longer.</p>
-        
+        <h2>Why Audio Matters for Your Brand</h2>
+        <p>Studies show that 80% of users prefer websites with background music. Sound creates emotional connections and improves user retention by up to 40%.</p>
         <div class="stats">
             <div class="stat">
+                <span class="stat-number">80%</span>
+                <span class="stat-label">Users prefer audio</span>
+            </div>
+            <div class="stat">
                 <span class="stat-number">40%</span>
-                <span class="stat-label">Longer session times with audio</span>
+                <span class="stat-label">Better retention</span>
             </div>
             <div class="stat">
-                <span class="stat-number">25%</span>
-                <span class="stat-label">Better brand recall</span>
+                <span class="stat-number">7</span>
+                <span class="stat-label">Unique vibes</span>
             </div>
             <div class="stat">
-                <span class="stat-number">5 min</span>
-                <span class="stat-label">Setup time</span>
+                <span class="stat-number">21</span>
+                <span class="stat-label">Intensity modes</span>
             </div>
         </div>
     </section>
 
-    <!-- Vibes Grid -->
+    <!-- Vibes Section -->
     <section id="vibes">
-        <h2>Choose Your Vibe</h2>
-        <p style="text-align: center; color: #666; font-size: 1.1rem; margin-bottom: 3rem;">
-            7 Unique Vibes × 3 Intensity Modes = 21 Perfect Brand Matches
-        </p>
-        
+        <h2>Explore Our Vibes</h2>
         <div class="vibes-grid">
             <!-- Calm & Cozy -->
             <div class="vibe-card">
                 <div class="vibe-header calm">
                     <h3>🕯️ Calm & Cozy</h3>
-                    <p>Warm, welcoming, peaceful</p>
+                    <p>Peaceful, warm, inviting</p>
                 </div>
                 <div class="vibe-body">
-                    <div class="mode"><strong>Soft Mornings:</strong> Gentle acoustic, pastel palette</div>
-                    <div class="mode"><strong>Golden Afternoons:</strong> Lo-fi beats, warm tones</div>
-                    <div class="mode"><strong>Fireside Nights:</strong> Deep acoustic, dim neutrals</div>
-                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Home decor, wellness, lifestyle brands</p>
+                    <div class="mode"><strong>Ambient Bliss:</strong> Soft piano, warm beige</div>
+                    <div class="mode"><strong>Gentle Breeze:</strong> Nature sounds, soft pink</div>
+                    <div class="mode"><strong>Cozy Corner:</strong> Lo-fi beats, cream & mint</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Wellness, spas, meditation apps</p>
                     <button class="play-demo-btn" data-vibe="calm"><span>▶</span> Play Demo</button>
                 </div>
             </div>
@@ -469,13 +625,13 @@
             <div class="vibe-card">
                 <div class="vibe-header focus">
                     <h3>🎯 Focus & Flow</h3>
-                    <p>Productive, clean, minimal</p>
+                    <p>Energizing, clear, productive</p>
                 </div>
                 <div class="vibe-body">
-                    <div class="mode"><strong>Minimal Mind:</strong> Ambient electronica, clean palette</div>
-                    <div class="mode"><strong>Steady Grind:</strong> Lo-fi hip hop, earth tones</div>
-                    <div class="mode"><strong>Peak Flow:</strong> Upbeat synths, neon gradients</div>
-                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: SaaS, productivity tools, coworking spaces</p>
+                    <div class="mode"><strong>Deep Work:</strong> Ambient tech, cool greys</div>
+                    <div class="mode"><strong>Flow State:</strong> Minimal beats, teal & white</div>
+                    <div class="mode"><strong>Momentum:</strong> Uplifting synth, cyan accents</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Productivity tools, SaaS, education</p>
                     <button class="play-demo-btn" data-vibe="focus"><span>▶</span> Play Demo</button>
                 </div>
             </div>
@@ -484,13 +640,13 @@
             <div class="vibe-card">
                 <div class="vibe-header uplift">
                     <h3>✨ Uplift & Glow</h3>
-                    <p>Energizing, bright, motivational</p>
+                    <p>Inspiring, positive, uplifting</p>
                 </div>
                 <div class="vibe-body">
-                    <div class="mode"><strong>Fresh Start:</strong> Tropical beats, mint & teal</div>
-                    <div class="mode"><strong>Midday Spark:</strong> Pop-house, bright yellow</div>
-                    <div class="mode"><strong>Radiant Night:</strong> EDM uplift, vibrant pinks</div>
-                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Fitness, beauty, motivation brands</p>
+                    <div class="mode"><strong>Golden Hour:</strong> Warm synth, sunset tones</div>
+                    <div class="mode"><strong>Rise & Shine:</strong> Uplifting strings, bright yellow</div>
+                    <div class="mode"><strong>Peak Energy:</strong> Motivational beats, vibrant</div>
+                    <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Fitness, coaching, inspiration</p>
                     <button class="play-demo-btn" data-vibe="uplift"><span>▶</span> Play Demo</button>
                 </div>
             </div>
@@ -552,6 +708,29 @@
                     <div class="mode"><strong>Party Mode:</strong> Dance/club, flashing neon</div>
                     <p style="margin-top: 1rem; color: #666; font-size: 0.9rem;">Perfect for: Entertainment, toys, youth brands</p>
                     <button class="play-demo-btn" data-vibe="playful"><span>▶</span> Play Demo</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Preview Section -->
+    <section class="live-preview-section" id="live-preview">
+        <h2>Experience the Vibes</h2>
+        <div class="preview-container">
+            <div class="preview-controls" id="preview-controls">
+                <button class="preview-btn active" data-vibe="calm">Calm</button>
+                <button class="preview-btn" data-vibe="focus">Focus</button>
+                <button class="preview-btn" data-vibe="uplift">Uplift</button>
+                <button class="preview-btn" data-vibe="bold">Bold</button>
+                <button class="preview-btn" data-vibe="earth">Earth</button>
+                <button class="preview-btn" data-vibe="luxury">Luxury</button>
+                <button class="preview-btn" data-vibe="playful">Playful</button>
+            </div>
+            <div class="preview-display">
+                <div class="preview-color-box" style="background: linear-gradient(135deg, #FFC0CB 0%, #40E0D0 100%);"></div>
+                <div class="preview-info">
+                    <h4>🕯️ Calm & Cozy</h4>
+                    <p>Peaceful, warm, inviting</p>
                 </div>
             </div>
         </div>
@@ -653,6 +832,41 @@
         </div>
     </section>
 
+    <!-- Credits Section -->
+    <section class="credits-section" id="credits">
+        <h2>Credits & Attributions</h2>
+        <p style="text-align: center; color: #666; max-width: 800px; margin: 0 auto 2rem;">VibezMode is built with care and powered by open-source technologies and curated audio experiences. We believe in transparency and proper attribution.</p>
+        <div class="credits-grid">
+            <div class="credit-card">
+                <h4>🎵 Audio & Music</h4>
+                <p>All audio tracks are carefully curated and licensed for commercial web use. Each vibe features original compositions and licensed music designed to enhance user experience without distraction. Our music library includes contributions from independent artists and production studios.</p>
+            </div>
+            <div class="credit-card">
+                <h4>💻 Technology Stack</h4>
+                <p>Built with vanilla JavaScript for maximum compatibility and performance. Designed to work seamlessly across all modern browsers (Chrome, Firefox, Safari, Edge). No external dependencies required—lightweight and fast.</p>
+            </div>
+            <div class="credit-card">
+                <h4>🎨 Design & UX</h4>
+                <p>UI/UX designed with accessibility and user experience in mind. Color palettes follow WCAG guidelines. Typography and spacing optimized for readability. All components tested for usability across devices.</p>
+            </div>
+            <div class="credit-card">
+                <h4>📚 Open Source</h4>
+                <p>VibezMode utilizes best practices from the open-source community. We're committed to giving back and maintaining transparent development. <a href="https://github.com/trendycahedecor25/Vibezmode" target="_blank">View our GitHub repository</a>.</p>
+            </div>
+            <div class="credit-card">
+                <h4>🤝 Community</h4>
+                <p>Special thanks to all beta testers, contributors, and users who have provided feedback. Your insights help us continuously improve VibezMode. Join our community and help shape the future of audio branding.</p>
+            </div>
+            <div class="credit-card">
+                <h4>📄 Legal & Licensing</h4>
+                <p>VibezMode respects intellectual property rights. All music is licensed appropriately. Our code is available under an open-source license. For licensing inquiries or attribution questions, <a href="mailto:hello@vibezmode.com">contact us</a>.</p>
+            </div>
+        </div>
+        <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #ddd; text-align: center; color: #999; font-size: 0.9rem;">
+            <p>VibezMode © 2026. All rights reserved. | <a href="#" style="color: #667eea;">Privacy Policy</a> | <a href="#" style="color: #667eea;">Terms of Service</a></p>
+        </div>
+    </section>
+
     <!-- Waitlist -->
     <section class="waitlist" id="waitlist">
         <h2>Join the Waitlist</h2>
@@ -668,62 +882,22 @@
         </div>
     </section>
 
-    <!-- Credits & Attributions -->
-    <section style="background: #f8f9fa; padding: 3rem 1.5rem;">
-        <h2>Credits & Attributions</h2>
-        <div style="max-width: 800px; margin: 0 auto; text-align: center; color: #666;">
-            <p style="margin-bottom: 1.5rem;">VibezMode is built with care and powered by open-source technologies and curated audio experiences.</p>
-            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; text-align: left;">
-                <div>
-                    <h4 style="color: #667eea; margin-bottom: 0.5rem;">Music & Audio</h4>
-                    <p style="font-size: 0.9rem;">All audio tracks are carefully curated and licensed for web use. Each vibe features original compositions designed to enhance user experience without distraction.</p>
-                </div>
-                <div>
-                    <h4 style="color: #667eea; margin-bottom: 0.5rem;">Technology</h4>
-                    <p style="font-size: 0.9rem;">Built with vanilla JavaScript for maximum compatibility. Designed to work seamlessly across all modern browsers and platforms.</p>
-                </div>
-                <div>
-                    <h4 style="color: #667eea; margin-bottom: 0.5rem;">Design</h4>
-                    <p style="font-size: 0.9rem;">UI/UX designed with accessibility in mind. Color palettes and typography chosen to ensure readability and brand alignment.</p>
-                </div>
-            </div>
-            <p style="margin-top: 2rem; font-size: 0.85rem; color: #999;">VibezMode © 2026. All rights reserved.</p>
-        </div>
-    </section>
-
     <!-- Footer -->
     <footer>
-        <p>&copy; 2024 VibezMode. Elevate your brand with audio.</p>
+        <p>&copy; 2026 VibezMode. Elevate your brand with audio.</p>
         <p style="margin-top: 0.5rem;">Questions? <a href="mailto:hello@vibezmode.com">hello@vibezmode.com</a></p>
     </footer>
-    <!-- Navigation Menu -->
-    <nav style="position: fixed; top: 0; left: 0; right: 0; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); z-index: 1000; padding: 1rem 1.5rem;">
-        <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
-            <h1 style="margin: 0; font-size: 1.5rem; color: #667eea;">VibezMode</h1>
-            <div style="display: flex; gap: 2rem;">
-                <a href="#vibes" style="text-decoration: none; color: #666; font-weight: 500;">Vibes</a>
-                <a href="#generator" style="text-decoration: none; color: #666; font-weight: 500;">Get Code</a>
-                <a href="#pricing" style="text-decoration: none; color: #666; font-weight: 500;">Pricing</a>
-                <a href="#waitlist" style="text-decoration: none; color: #667eea; font-weight: 700;">Join Waitlist</a>
-            </div>
-        </div>
-    </nav>
-    
-    <style>
-        .hero {
-            margin-top: 60px;
-        }
-    </style>
 
     <audio id="vibe-player"></audio>
     <!-- Live Preview of the Embeddable Player -->
-    <script src="v1/calm.js"><\/script>
+    <script src="v1/calm.js"></script>
 
     <script>
         const player = document.getElementById('vibe-player');
         const playButtons = document.querySelectorAll('.play-demo-btn');
         let currentVibe = null;
 
+        // Play demo buttons
         playButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 const vibe = this.getAttribute('data-vibe');
@@ -733,7 +907,6 @@
                     this.innerHTML = '<span>▶</span> Play Demo';
                     this.classList.remove('playing');
                 } else {
-                    // Stop current playing button
                     playButtons.forEach(b => {
                         b.innerHTML = '<span>▶</span> Play Demo';
                         b.classList.remove('playing');
@@ -756,6 +929,35 @@
             currentVibe = null;
         });
 
+        // Live preview
+        const previewBtns = document.querySelectorAll('.preview-btn');
+        const previewDisplay = document.querySelector('.preview-display');
+        const vibeColors = {
+            calm: { gradient: 'linear-gradient(135deg, #FFC0CB 0%, #40E0D0 100%)', emoji: '🕯️', name: 'Calm & Cozy', desc: 'Peaceful, warm, inviting' },
+            focus: { gradient: 'linear-gradient(135deg, #E0E0E0 0%, #00CED1 100%)', emoji: '🎯', name: 'Focus & Flow', desc: 'Energizing, clear, productive' },
+            uplift: { gradient: 'linear-gradient(135deg, #4ECDC4 0%, #F7DC6F 100%)', emoji: '✨', name: 'Uplift & Glow', desc: 'Inspiring, positive, uplifting' },
+            bold: { gradient: 'linear-gradient(135deg, #FFB3BA 0%, #BAE1FF 100%)', emoji: '🎨', name: 'Bold & Creative', desc: 'Artistic, vibrant, expressive' },
+            earth: { gradient: 'linear-gradient(135deg, #9CAF88 0%, #83C5BE 100%)', emoji: '🌿', name: 'Earth & Nature', desc: 'Organic, grounded, serene' },
+            luxury: { gradient: 'linear-gradient(135deg, #D4AF37 0%, #1a1a1a 100%)', emoji: '👑', name: 'Luxury & Chill', desc: 'Sophisticated, elegant, premium' },
+            playful: { gradient: 'linear-gradient(135deg, #FF69B4 0%, #00FF00 100%)', emoji: '🎉', name: 'Playful & Fun', desc: 'Energetic, joyful, lively' }
+        };
+
+        previewBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                previewBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                const vibe = this.getAttribute('data-vibe');
+                const vibeData = vibeColors[vibe];
+                const colorBox = previewDisplay.querySelector('.preview-color-box');
+                const infoBox = previewDisplay.querySelector('.preview-info');
+                
+                colorBox.style.background = vibeData.gradient;
+                infoBox.innerHTML = `<h4>${vibeData.emoji} ${vibeData.name}</h4><p>${vibeData.desc}</p>`;
+            });
+        });
+
+        // Code generator
         const vibeSelect = document.getElementById('vibe-select');
         const codeBlock = document.getElementById('code-block');
         const copyBtn = document.getElementById('copy-btn');
@@ -780,6 +982,7 @@
             });
         });
 
+        // Waitlist form
         document.getElementById('form').addEventListener('submit', function(e) {
             e.preventDefault();
             const email = this.querySelector('input').value;
@@ -790,7 +993,6 @@
                 return;
             }
             
-            // Store in localStorage for demo purposes
             const waitlist = JSON.parse(localStorage.getItem('vibezmode_waitlist') || '[]');
             if (!waitlist.includes(email)) {
                 waitlist.push(email);
@@ -806,12 +1008,16 @@
             }, 5000);
         });
 
+        // Smooth scrolling
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
     </script>
