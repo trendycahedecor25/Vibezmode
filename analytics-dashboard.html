@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibezMode Analytics Dashboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 2rem;
+        }
+
+        .header p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .controls {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #5568d3;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: #f0f0f0;
+            color: #333;
+        }
+
+        .btn-secondary:hover {
+            background: #e0e0e0;
+        }
+
+        .btn-danger {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #ff5252;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+
+        .stat-card h3 {
+            color: #666;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .value {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: #667eea;
+        }
+
+        .stat-card .subtext {
+            color: #999;
+            font-size: 0.85rem;
+            margin-top: 0.5rem;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            color: #1a1a1a;
+            margin-bottom: 1.5rem;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .vibe-breakdown {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .vibe-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .vibe-name {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .vibe-count {
+            background: #667eea;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .event-log {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .event-item {
+            padding: 0.75rem;
+            border-bottom: 1px solid #e0e0e0;
+            color: #666;
+        }
+
+        .event-item:last-child {
+            border-bottom: none;
+        }
+
+        .event-time {
+            color: #999;
+            font-size: 0.8rem;
+        }
+
+        .event-name {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 3rem 1rem;
+            color: #999;
+        }
+
+        .empty-state h3 {
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: #e0e0e0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 1.5rem;
+        }
+
+        .tab {
+            padding: 1rem;
+            cursor: pointer;
+            color: #999;
+            font-weight: 600;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: #667eea;
+            border-bottom-color: #667eea;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .export-section {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+        }
+
+        .export-section textarea {
+            width: 100%;
+            height: 150px;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-family: monospace;
+            font-size: 0.85rem;
+            resize: vertical;
+        }
+
+        @media (max-width: 768px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .controls {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📊 VibezMode Analytics Dashboard</h1>
+            <p>Track user engagement and vibe performance across your website</p>
+            <div class="controls">
+                <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh Data</button>
+                <button class="btn btn-secondary" onclick="exportData()">📥 Export JSON</button>
+                <button class="btn btn-danger" onclick="clearData()">🗑️ Clear All Data</button>
+            </div>
+        </div>
+
+        <!-- Statistics Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>Total Events</h3>
+                <div class="value" id="total-events">0</div>
+                <div class="subtext">Tracked interactions</div>
+            </div>
+            <div class="stat-card">
+                <h3>Page Loads</h3>
+                <div class="value" id="page-loads">0</div>
+                <div class="subtext">Unique sessions</div>
+            </div>
+            <div class="stat-card">
+                <h3>Playback Events</h3>
+                <div class="value" id="playback-events">0</div>
+                <div class="subtext">Play/pause actions</div>
+            </div>
+            <div class="stat-card">
+                <h3>Avg Session Time</h3>
+                <div class="value" id="avg-session-time">0s</div>
+                <div class="subtext">Time on page</div>
+            </div>
+        </div>
+
+        <!-- Dashboard Grid -->
+        <div class="dashboard-grid">
+            <!-- Vibe Breakdown -->
+            <div class="card">
+                <h2>🎵 Vibe Breakdown</h2>
+                <div class="vibe-breakdown" id="vibe-breakdown">
+                    <div class="empty-state">
+                        <h3>No data yet</h3>
+                        <p>Events will appear here once users interact with the player</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Event Types -->
+            <div class="card">
+                <h2>📈 Event Distribution</h2>
+                <div id="event-distribution">
+                    <div class="empty-state">
+                        <h3>No data yet</h3>
+                        <p>Event types will appear here once users interact</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Event Log -->
+        <div class="card">
+            <h2>📋 Event Log</h2>
+            <div class="tabs">
+                <div class="tab active" onclick="switchTab('recent')">Recent Events</div>
+                <div class="tab" onclick="switchTab('export')">Export Data</div>
+            </div>
+
+            <div id="recent" class="tab-content active">
+                <div class="event-log" id="event-log">
+                    <div class="empty-state">
+                        <h3>No events recorded</h3>
+                        <p>Events will appear here as users interact with VibezMode</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="export" class="tab-content">
+                <div class="export-section">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600;">Raw Analytics Data (JSON)</label>
+                    <textarea id="export-textarea" readonly></textarea>
+                    <button class="btn btn-primary" style="margin-top: 1rem; width: 100%;" onclick="copyToClipboard()">📋 Copy to Clipboard</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load and display analytics data
+        function loadAnalytics() {
+            const data = JSON.parse(localStorage.getItem('vibezmode_analytics') || '[]');
+            return data;
+        }
+
+        function refreshData() {
+            const events = loadAnalytics();
+            
+            // Update stats
+            document.getElementById('total-events').textContent = events.length;
+            
+            const pageLoads = events.filter(e => e.name === 'page_load').length;
+            document.getElementById('page-loads').textContent = pageLoads;
+            
+            const playbackEvents = events.filter(e => e.name === 'playback').length;
+            document.getElementById('playback-events').textContent = playbackEvents;
+            
+            // Calculate average session time
+            const sessionTimes = [];
+            const uniqueSessions = new Set();
+            events.forEach(e => {
+                if (e.sessionDuration) {
+                    uniqueSessions.add(e.sessionId || 'default');
+                    sessionTimes.push(e.sessionDuration);
+                }
+            });
+            const avgTime = sessionTimes.length > 0 
+                ? Math.round(sessionTimes.reduce((a, b) => a + b, 0) / sessionTimes.length / 1000)
+                : 0;
+            document.getElementById('avg-session-time').textContent = avgTime + 's';
+            
+            // Vibe breakdown
+            const vibeBreakdown = {};
+            events.forEach(e => {
+                if (e.vibe) {
+                    vibeBreakdown[e.vibe] = (vibeBreakdown[e.vibe] || 0) + 1;
+                }
+            });
+            
+            const vibeHtml = Object.entries(vibeBreakdown)
+                .sort((a, b) => b[1] - a[1])
+                .map(([vibe, count]) => {
+                    const percentage = (count / events.length * 100).toFixed(0);
+                    return `
+                        <div class="vibe-item">
+                            <span class="vibe-name">${vibe.charAt(0).toUpperCase() + vibe.slice(1)}</span>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 150px;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                                    </div>
+                                </div>
+                                <span class="vibe-count">${count} (${percentage}%)</span>
+                            </div>
+                        </div>
+                    `;
+                })
+                .join('');
+            
+            document.getElementById('vibe-breakdown').innerHTML = vibeHtml || 
+                '<div class="empty-state"><h3>No data yet</h3><p>Events will appear here once users interact with the player</p></div>';
+            
+            // Event distribution
+            const eventTypes = {};
+            events.forEach(e => {
+                eventTypes[e.name] = (eventTypes[e.name] || 0) + 1;
+            });
+            
+            const eventHtml = Object.entries(eventTypes)
+                .sort((a, b) => b[1] - a[1])
+                .map(([type, count]) => {
+                    const percentage = (count / events.length * 100).toFixed(0);
+                    return `
+                        <div class="vibe-item">
+                            <span class="vibe-name">${type}</span>
+                            <div style="display: flex; align-items: center; gap: 1rem;">
+                                <div style="width: 150px;">
+                                    <div class="progress-bar">
+                                        <div class="progress-fill" style="width: ${percentage}%"></div>
+                                    </div>
+                                </div>
+                                <span class="vibe-count">${count} (${percentage}%)</span>
+                            </div>
+                        </div>
+                    `;
+                })
+                .join('');
+            
+            document.getElementById('event-distribution').innerHTML = eventHtml || 
+                '<div class="empty-state"><h3>No data yet</h3><p>Event types will appear here once users interact</p></div>';
+            
+            // Event log (last 50 events)
+            const recentEvents = events.slice(-50).reverse();
+            const logHtml = recentEvents.map(e => {
+                const time = new Date(e.timestamp).toLocaleTimeString();
+                return `
+                    <div class="event-item">
+                        <span class="event-time">${time}</span> - 
+                        <span class="event-name">${e.name}</span>
+                        ${e.vibe ? ` (${e.vibe})` : ''}
+                    </div>
+                `;
+            }).join('');
+            
+            document.getElementById('event-log').innerHTML = logHtml || 
+                '<div class="empty-state"><h3>No events recorded</h3><p>Events will appear here as users interact with VibezMode</p></div>';
+            
+            // Export data
+            document.getElementById('export-textarea').value = JSON.stringify(events, null, 2);
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        function exportData() {
+            const events = loadAnalytics();
+            const dataStr = JSON.stringify(events, null, 2);
+            const dataBlob = new Blob([dataStr], { type: 'application/json' });
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `vibezmode-analytics-${new Date().toISOString().split('T')[0]}.json`;
+            link.click();
+            URL.revokeObjectURL(url);
+        }
+
+        function clearData() {
+            if (confirm('Are you sure you want to clear all analytics data? This cannot be undone.')) {
+                localStorage.removeItem('vibezmode_analytics');
+                refreshData();
+                alert('Analytics data cleared.');
+            }
+        }
+
+        function copyToClipboard() {
+            const textarea = document.getElementById('export-textarea');
+            textarea.select();
+            document.execCommand('copy');
+            alert('Data copied to clipboard!');
+        }
+
+        // Initial load
+        refreshData();
+
+        // Auto-refresh every 5 seconds
+        setInterval(refreshData, 5000);
+    </script>
+</body>
+</html>
