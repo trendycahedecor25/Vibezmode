@@ -279,6 +279,58 @@
             resize: vertical;
         }
 
+        .ab-test-card {
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .ab-test-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .ab-test-id {
+            font-weight: 700;
+            color: #667eea;
+            font-size: 1.1rem;
+        }
+
+        .ab-variant-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .ab-variant-card {
+            background: #f8f9fa;
+            padding: 1rem;
+            border-radius: 8px;
+            border-top: 4px solid #667eea;
+        }
+
+        .ab-variant-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .ab-metric {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .ab-metric-value {
+            font-weight: 700;
+            color: #333;
+        }
+
         @media (max-width: 768px) {
             .dashboard-grid {
                 grid-template-columns: 1fr;
@@ -303,7 +355,7 @@
         <!-- Header -->
         <div class="header">
             <h1>📊 VibezMode Analytics Dashboard</h1>
-            <p>Track user engagement and vibe performance across your website</p>
+            <p>Track user engagement, vibe performance, and A/B test results</p>
             <div class="controls">
                 <button class="btn btn-primary" onclick="refreshData()">🔄 Refresh Data</button>
                 <button class="btn btn-secondary" onclick="exportData()">📥 Export JSON</button>
@@ -332,6 +384,17 @@
                 <h3>Avg Session Time</h3>
                 <div class="value" id="avg-session-time">0s</div>
                 <div class="subtext">Time on page</div>
+            </div>
+        </div>
+
+        <!-- A/B Testing Section -->
+        <div class="card" style="margin-bottom: 2rem;">
+            <h2>🧪 A/B Test Performance</h2>
+            <div id="ab-testing-results">
+                <div class="empty-state">
+                    <h3>No A/B tests detected</h3>
+                    <p>Use the A/B testing framework to see results here</p>
+                </div>
             </div>
         </div>
 
@@ -408,10 +471,8 @@
             
             // Calculate average session time
             const sessionTimes = [];
-            const uniqueSessions = new Set();
             events.forEach(e => {
                 if (e.sessionDuration) {
-                    uniqueSessions.add(e.sessionId || 'default');
                     sessionTimes.push(e.sessionDuration);
                 }
             });
@@ -419,6 +480,69 @@
                 ? Math.round(sessionTimes.reduce((a, b) => a + b, 0) / sessionTimes.length / 1000)
                 : 0;
             document.getElementById('avg-session-time').textContent = avgTime + 's';
+            
+            // A/B Testing Results
+            const abTests = {};
+            events.forEach(e => {
+                if (e.abTestId) {
+                    if (!abTests[e.abTestId]) abTests[e.abTestId] = {};
+                    const variant = e.abVariant || 'unknown';
+                    if (!abTests[e.abTestId][variant]) {
+                        abTests[e.abTestId][variant] = {
+                            loads: 0,
+                            plays: 0,
+                            totalTime: 0,
+                            events: 0
+                        };
+                    }
+                    abTests[e.abTestId][variant].events++;
+                    if (e.name === 'page_load') abTests[e.abTestId][variant].loads++;
+                    if (e.name === 'playback' && e.action === 'play') abTests[e.abTestId][variant].plays++;
+                    if (e.sessionDuration) abTests[e.abTestId][variant].totalTime += e.sessionDuration;
+                }
+            });
+
+            const abHtml = Object.entries(abTests).map(([testId, variants]) => {
+                const variantHtml = Object.entries(variants).map(([name, stats]) => {
+                    const playRate = stats.loads > 0 ? (stats.plays / stats.loads * 100).toFixed(1) : 0;
+                    const avgSession = stats.loads > 0 ? (stats.totalTime / stats.loads / 1000).toFixed(0) : 0;
+                    return `
+                        <div class="ab-variant-card">
+                            <span class="ab-variant-name">${name.toUpperCase()}</span>
+                            <div class="ab-metric">
+                                <span>Loads:</span>
+                                <span class="ab-metric-value">${stats.loads}</span>
+                            </div>
+                            <div class="ab-metric">
+                                <span>Plays:</span>
+                                <span class="ab-metric-value">${stats.plays}</span>
+                            </div>
+                            <div class="ab-metric">
+                                <span>Play Rate:</span>
+                                <span class="ab-metric-value">${playRate}%</span>
+                            </div>
+                            <div class="ab-metric">
+                                <span>Avg Session:</span>
+                                <span class="ab-metric-value">${avgSession}s</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="ab-test-card">
+                        <div class="ab-test-header">
+                            <span class="ab-test-id">Test: ${testId}</span>
+                        </div>
+                        <div class="ab-variant-grid">
+                            ${variantHtml}
+                        </div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('ab-testing-results').innerHTML = abHtml || 
+                '<div class="empty-state"><h3>No A/B tests detected</h3><p>Use the A/B testing framework to see results here</p></div>';
             
             // Vibe breakdown
             const vibeBreakdown = {};
@@ -489,6 +613,7 @@
                         <span class="event-time">${time}</span> - 
                         <span class="event-name">${e.name}</span>
                         ${e.vibe ? ` (${e.vibe})` : ''}
+                        ${e.abVariant ? ` [Variant: ${e.abVariant}]` : ''}
                     </div>
                 `;
             }).join('');
