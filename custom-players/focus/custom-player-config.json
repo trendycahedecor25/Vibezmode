@@ -1,0 +1,12 @@
+{
+  "vibe": "focus",
+  "player_position": "bottom-left",
+  "player_size": "small",
+  "primary_color": "#E0E0E0",
+  "secondary_color": "#00CED1",
+  "autoplay": false,
+  "volume": 60,
+  "enable_analytics": true,
+  "site_id": "productivity-app",
+  "custom_css": ".vibezmode-player { border-radius: 15px !important; }"
+}

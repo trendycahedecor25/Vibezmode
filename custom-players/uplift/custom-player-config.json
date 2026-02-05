@@ -1,0 +1,12 @@
+{
+  "vibe": "uplift",
+  "player_position": "top-right",
+  "player_size": "large",
+  "primary_color": "#4ECDC4",
+  "secondary_color": "#F7DC6F",
+  "autoplay": false,
+  "volume": 70,
+  "enable_analytics": true,
+  "site_id": "fitness-app",
+  "custom_css": "@keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } } .vibezmode-player { animation: float 3s ease-in-out infinite !important; }"
+}

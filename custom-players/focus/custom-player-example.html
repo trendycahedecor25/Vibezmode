@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibezMode Custom Player - Focus</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            background: white;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+
+        p {
+            color: #666;
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .info {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+            margin-top: 30px;
+        }
+
+        .info h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .info ul {
+            list-style: none;
+            color: #666;
+        }
+
+        .info li {
+            padding: 5px 0;
+        }
+
+        .info li::before {
+            content: "✓ ";
+            color: #667eea;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎵 VibezMode</h1>
+        <p>Experience the power of audio branding with your custom Focus vibe.</p>
+        
+        <p>Look for the music player in the corner of your screen. Click to play!</p>
+        
+        <div class="info">
+            <h3>Configuration</h3>
+            <ul>
+                <li>Vibe: Focus</li>
+                <li>Position: bottom-left</li>
+                <li>Size: small</li>
+                <li>Default Volume: 60%</li>
+                <li>Analytics: Enabled</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Load custom player -->
+    <script src="custom-player.js"></script>
+</body>
+</html>

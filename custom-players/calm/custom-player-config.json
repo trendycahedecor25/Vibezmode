@@ -1,0 +1,12 @@
+{
+  "vibe": "calm",
+  "player_position": "bottom-right",
+  "player_size": "medium",
+  "primary_color": "#FFC0CB",
+  "secondary_color": "#40E0D0",
+  "autoplay": false,
+  "volume": 50,
+  "enable_analytics": true,
+  "site_id": "my-website",
+  "custom_css": ""
+}
