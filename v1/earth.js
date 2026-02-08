@@ -36,7 +36,8 @@
             position: fixed;
             bottom: 80px;
             right: 20px;
-            width: 220px;
+            width: calc(100vw - 40px);
+            max-width: 220px;
             background: white;
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);

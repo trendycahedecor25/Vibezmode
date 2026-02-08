@@ -285,50 +285,84 @@
             border-radius: 12px;
             padding: 1.5rem;
             margin-bottom: 1.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .ab-test-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px dashed #eee;
         }
 
         .ab-test-id {
             font-weight: 700;
             color: #667eea;
-            font-size: 1.1rem;
+            font-size: 1.2rem;
         }
 
         .ab-variant-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
         }
 
         .ab-variant-card {
             background: #f8f9fa;
-            padding: 1rem;
-            border-radius: 8px;
+            padding: 1.5rem;
+            border-radius: 10px;
             border-top: 4px solid #667eea;
+            transition: transform 0.3s;
+            position: relative;
+        }
+
+        .ab-variant-card.winner {
+            border-top-color: #4caf50;
+            background: #f1f8f1;
+            transform: scale(1.02);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
+        }
+
+        .winner-badge {
+            position: absolute;
+            top: -12px;
+            right: 10px;
+            background: #4caf50;
+            color: white;
+            padding: 2px 10px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
         }
 
         .ab-variant-name {
-            font-weight: 600;
-            margin-bottom: 0.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
             display: block;
+            font-size: 1.1rem;
+            color: #333;
         }
 
         .ab-metric {
             display: flex;
             justify-content: space-between;
-            font-size: 0.9rem;
-            margin-bottom: 0.3rem;
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+            padding-bottom: 0.3rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
 
         .ab-metric-value {
             font-weight: 700;
-            color: #333;
+            color: #667eea;
+        }
+
+        .ab-variant-card.winner .ab-metric-value {
+            color: #4caf50;
         }
 
         @media (max-width: 768px) {
@@ -383,7 +417,7 @@
             <div class="stat-card">
                 <h3>Avg Session Time</h3>
                 <div class="value" id="avg-session-time">0s</div>
-                <div class="subtext">Time on page</div>
+                <div class="subtext">Per user session</div>
             </div>
         </div>
 
@@ -503,11 +537,26 @@
             });
 
             const abHtml = Object.entries(abTests).map(([testId, variants]) => {
+                // Determine winner based on play rate
+                let winner = null;
+                let maxRate = -1;
+                
+                Object.entries(variants).forEach(([name, stats]) => {
+                    const rate = stats.loads > 0 ? (stats.plays / stats.loads) : 0;
+                    if (rate > maxRate && stats.loads > 0) {
+                        maxRate = rate;
+                        winner = name;
+                    }
+                });
+
                 const variantHtml = Object.entries(variants).map(([name, stats]) => {
                     const playRate = stats.loads > 0 ? (stats.plays / stats.loads * 100).toFixed(1) : 0;
                     const avgSession = stats.loads > 0 ? (stats.totalTime / stats.loads / 1000).toFixed(0) : 0;
+                    const isWinner = name === winner && stats.loads > 0;
+                    
                     return `
-                        <div class="ab-variant-card">
+                        <div class="ab-variant-card ${isWinner ? 'winner' : ''}">
+                            ${isWinner ? '<div class="winner-badge">Leading</div>' : ''}
                             <span class="ab-variant-name">${name.toUpperCase()}</span>
                             <div class="ab-metric">
                                 <span>Loads:</span>
